@@ -1,17 +1,46 @@
+import google.generativeai as genai
+
+genai.configure(
+
+    api_key="AQ.Ab8RN6Kk_ez9478pHjCVvqv3NzW-r3mJ0C6nrEordSe_gY9xhQ"
+
+)
+
+model = genai.GenerativeModel(
+
+    "gemini-1.5-flash"
+
+)
+
+
 def health_prediction(
-        glucose,
-        haemoglobin,
-        cholesterol
+
+    glucose,
+
+    haemoglobin,
+
+    cholesterol
+
 ):
 
-    if glucose > 140 and cholesterol > 220:
+    prompt = f"""
 
-        return "High diabetes/cardiac risk"
+    Predict possible health risk.
 
-    elif haemoglobin < 11:
+    Glucose: {glucose}
 
-        return "Possible anemia"
+    Haemoglobin: {haemoglobin}
 
-    else:
+    Cholesterol: {cholesterol}
 
-        return "Normal risk"
+    Give short remarks.
+
+    """
+
+    response = model.generate_content(
+
+        prompt
+
+    )
+
+    return response.text
